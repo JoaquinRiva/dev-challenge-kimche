@@ -168,3 +168,43 @@
   padding: 5px;
   margin: 3px;
 }
+
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px; 
+  margin-bottom: 60px;
+  background-color: rgba(47, 43, 150, 0.39);
+}
+
+.spanPag{
+  font-size: 20px;
+  margin: 2px;
+  color: #ffffff;
+  cursor: pointer;
+  border-bottom: 10px solid #ffff;
+  border-top: 10px solid #ffff;
+  
+}
+
+
+
+.buttonPag {
+  padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.buttonPag:hover {
+  transition: 0.3s;
+  background-color: #6957a36c;
+}

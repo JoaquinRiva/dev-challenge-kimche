@@ -8,26 +8,68 @@ import { Detail } from "./views/Detail/Detail";
 import { useQuery, gql } from '@apollo/client';
 import { useLazyQuery } from '@apollo/client';
 import Filters from "./components/Filters/Filters";
-
+import { useLocation } from "react-router-dom";
 
 export const App = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const { search } = useLocation();
   const [searchCharacter, { loading: searchLoading, data: searchData }] = useLazyQuery(GET_CHARACTERS_BY_NAME);
-  const { loading: allCharactersLoading, data: allCharactersData } = useQuery(GET_CHARACTERS);
+  const { loading, data } = useQuery(GET_CHARACTERS, {
+    variables: { page: currentPage },
+  });
+
+  const [allCharacters, setAllCharacters] = useState([]);
   const [characters, setCharacters] = useState([]);
-  const [showAllCharacters, setShowAllCharacters] = useState(true);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
+  const [pageNumberInput, setPageNumberInput] = useState('');
 
   useEffect(() => {
     if (!searchLoading && searchData && searchData.characters.results.length > 0) {
       setCharacters(searchData.characters.results);
       setFilteredCharacters(searchData.characters.results);
-      setShowAllCharacters(true);
-    } else if (!allCharactersLoading && allCharactersData) {
-      setCharacters(allCharactersData.characters.results);
-      setFilteredCharacters(allCharactersData.characters.results);
-      setShowAllCharacters(false);
+      setTotalPages(searchData.characters.info.pages);
     }
-  }, [searchLoading, searchData, allCharactersLoading, allCharactersData]);
+  }, [searchLoading, searchData]);
+
+  useEffect(() => {
+    if (!loading && data) {
+      setAllCharacters(data.characters.results);
+      setCharacters(data.characters.results);
+      setFilteredCharacters(data.characters.results);
+      setTotalPages(data.characters.info.pages);
+    }
+  }, [loading, data]);
+
+  useEffect(() => {
+    if (search === "") {
+      setCurrentPage(1);
+    }
+  }, [search]);
+
+  const handleNextPage = () => {
+    setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
+
+  const handlePageChange = () => {
+    let page = parseInt(pageNumberInput);
+    if (isNaN(page) || page < 1) {
+      page = 1;
+    } else if (page > totalPages) {
+      page = totalPages;
+    }
+    setCurrentPage(page);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handlePageChange();
+    }
+  };
 
   const searchHandler = (name) => {
     searchCharacter({ variables: { name: name } });
@@ -47,15 +89,13 @@ export const App = () => {
   };
 
   const handleShowAllCharacters = () => {
-  setCharacters(allCharactersData.characters.results); 
-  setFilteredCharacters(allCharactersData.characters.results); 
-  setShowAllCharacters(true);
-};
+    setCharacters(allCharacters);
+    setFilteredCharacters(allCharacters);
+  };
 
-const handleResetFilters = () => {
-  setFilteredCharacters(characters); 
-  setShowAllCharacters(true); 
-};
+  const handleResetFilters = () => {
+    setFilteredCharacters(characters);
+  };
 
   return (
     <div className="App">
@@ -70,13 +110,26 @@ const handleResetFilters = () => {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Navigate to='home'/>} />
       </Routes>
+      {!loading && (
+        <div className="pagination-container">
+          <div className="pagination">
+            <button className="buttonPag" onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+            <span className="spanPag">{currentPage}</span>
+            <button className="buttonPag" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+      };
 
 const GET_CHARACTERS = gql`
-  query GetCharacters {
-    characters {
+  query GetCharacters($page: Int!) {
+    characters(page: $page) {
+      info {
+        pages
+        next
+      }
       results {
         id
         name
@@ -92,6 +145,9 @@ const GET_CHARACTERS = gql`
 const GET_CHARACTERS_BY_NAME = gql`
   query GetCharactersByName($name: String!) {
     characters(filter: { name: $name }) {
+      info {
+        pages
+      }
       results {
         id
         name
@@ -103,4 +159,3 @@ const GET_CHARACTERS_BY_NAME = gql`
     }
   }
 `;
-
