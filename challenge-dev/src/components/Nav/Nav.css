@@ -1,0 +1,100 @@
+.containerNav{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    background-color: rgb(226, 226, 226);
+    padding: 10px ; 
+    max-height: 50px;
+    margin: 0 auto;
+    margin-top: 20px; 
+    width: 80%;
+    border-radius: 20px;
+    align-items: center;
+    font-weight: bold;
+    box-shadow: 0px 0px 65px -9px rgba(255,255,255,1);
+-webkit-box-shadow: 0px 0px 65px -9px rgba(255,255,255,1);
+-moz-box-shadow: 0px 0px 65px -9px rgba(255,255,255,1);
+}
+
+.navAparte {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    background-color: rgb(226, 226, 226);
+    padding: 10px ; 
+    max-height: 50px;
+    margin: 0 auto;
+    margin-top: 0px; 
+    width: 80%;
+    border-radius: 20px;
+    align-items: center;
+    font-weight: bold;
+   
+}
+.controls{
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+    text-decoration: none;
+    color: #725ac1;
+    font-weight: bold;
+
+}
+
+
+.controlsAdd{
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 8px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+    text-decoration: none;
+    color: #725ac1;
+    font-weight: bold;
+
+}
+.controlsInput{
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.37);
+    border: none;
+    color: #725ac1;
+    font-weight: bold;
+
+}
+.controlsInput:focus{
+    outline: none
+}
+.controls:hover{
+    background-color: #875ac138;
+}
+
+
+
+      .buttonHome {
+        padding: 10px;
+        background-color: transparent;
+        border-radius: 8px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 15px;
+        text-decoration: none;
+        color: #725ac1;
+        font-weight: bold;
+      }
+
+      .buttonHome:hover {
+        transform: translateY(-2px);
+        background-color: #952fbb3d;
+      }
+      
