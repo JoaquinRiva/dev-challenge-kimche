@@ -105,12 +105,10 @@ export const App = () => {
       />
       <Filters onApplyFilters={handleApplyFilters} onResetFilters={handleResetFilters} />
       <Routes>
-        <Route path="/home" element={<Cards characters={filteredCharacters} />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/" element={<Navigate to='home'/>} />
-      </Routes>
-      {!loading && (
+  <Route path="/home" element={
+    <>
+      <Cards characters={filteredCharacters} />
+      {!loading && filteredCharacters.length > 0 && (
         <div className="pagination-container">
           <div className="pagination">
             <button className="buttonPag" onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
@@ -119,6 +117,13 @@ export const App = () => {
           </div>
         </div>
       )}
+    </>
+  } />
+  <Route path="/detail/:id" element={<Detail />} />
+  <Route path="*" element={<ErrorPage />} />
+  <Route path="/" element={<Navigate to='home'/>} />
+</Routes>
+      
     </div>
   );
       };
