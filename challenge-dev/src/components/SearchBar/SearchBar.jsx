@@ -24,6 +24,7 @@ export default function SearchBar({ searchHandler }) {
       setError("Please enter a character name.");
     } else {
       searchHandler(name);
+      setName(""); 
     }
   };
 
@@ -32,7 +33,7 @@ export default function SearchBar({ searchHandler }) {
       <input
         className="controlsInput"
         type="search"
-        placeholder="Insert character name"
+        placeholder="Insert name"
         onChange={handleChange}
         value={name}
         onKeyDown={handleKeyPress}

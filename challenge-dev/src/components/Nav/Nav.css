@@ -84,7 +84,7 @@
       .buttonHome {
         padding: 10px;
         background-color: transparent;
-        border-radius: 8px;
+        border-radius: 80px;
         color: white;
         border: none;
         cursor: pointer;
@@ -98,5 +98,6 @@
       .buttonHome:hover {
         transform: translateY(-2px);
         background-color: #952fbb3d;
+        padding: 20px;
       }
       

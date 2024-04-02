@@ -65,12 +65,6 @@ export const App = () => {
     setCurrentPage(page);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handlePageChange();
-    }
-  };
-
   const searchHandler = (name) => {
     searchCharacter({ variables: { name: name } });
   };
